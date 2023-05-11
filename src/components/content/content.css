@@ -1,0 +1,10 @@
+.container{
+    margin: 20px auto;
+    width: 95%;
+    min-width: 700px;
+    border-radius: 5px;
+}
+
+.section{
+    margin: 30px auto;
+}

@@ -1,23 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+import {BiAdjust} from 'react-icons/bi';
+import Content from './components/content/content'
 
 function App() {
+  let [nightMode,toggleNightMode] = useState(true)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className={`App ${nightMode ? 'Night':'Day'}`}>
+      <header className='heading'>
+        <h2>Weather App</h2>
+        <button 
+          variant='secondary' 
+          className={`btn-icon btn-${nightMode ? 'Night':'Day'}`} 
+          onClick={()=>toggleNightMode(!nightMode)}>
+            <BiAdjust />
+        </button>
       </header>
+      <hr className={`horizontalRule`}/>
+      <section>
+        <Content nightMode={nightMode}/>
+      </section>
     </div>
   );
 }
