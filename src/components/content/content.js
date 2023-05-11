@@ -1,4 +1,5 @@
 import React,{useEffect, useState} from 'react';
+import { useForm } from "react-hook-form";
 import axios from 'axios';
 import {
   Chart as ChartJS,
@@ -30,10 +31,15 @@ export default function Content({nightMode}) {
   let [weatherData,setWeatherData] = useState({})
   let [dayChart,setDayChart] = useState("");
   let [weekChart,setWeekChart] = useState("");
-
+  const { register, handleSubmit } = useForm();
+  const onSubmit = (data, e) => {
+    console.log(data, e)
+    setLatitude(data.latitude);
+    setLongitude(data.longitude);
+  };
+  const onError = (errors, e) => console.log(errors, e);
 
   let baseUrl = 'https://api.open-meteo.com/v1/forecast?';
-  
 
   useEffect(()=>{
     if(navigator.geolocation){
@@ -48,14 +54,16 @@ export default function Content({nightMode}) {
   },[])
 
   useEffect(()=>{
-    let url = baseUrl + `latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m`;
-
-    axios.get(url).then((res)=>{
-      setWeatherData(res.data);
-    }).catch((error)=>{
-      console.error(error);
-      window.alert(error.message);
-    });
+    if(latitude && longitude){
+      let url = baseUrl + `latitude=${latitude}&longitude=${longitude}&hourly=temperature_2m`;
+      
+      axios.get(url).then((res)=>{
+        setWeatherData(res.data);
+      }).catch((error)=>{
+        console.error(error);
+        window.alert(error.message);
+      });
+    }
 
   },[latitude,longitude])
 
@@ -117,6 +125,15 @@ export default function Content({nightMode}) {
 
   return (
     <div className={`container ${nightMode? 'Day':'Night'}`}>
+      
+      <section className='section'>
+        <header><h4>Custom Search</h4></header>
+        <form onSubmit={handleSubmit(onSubmit, onError)}>
+          <input type='text' id='latitude' name='latitude' placeholder='Latitude' {...register('latitude')}/>
+          <input type='text' id='longitude' name='longitude' placeholder='Longitude' {...register('longitude')}/>
+          <button type='submit'>Submit</button>
+        </form>
+      </section>
 
       <section className='section'>
         <header><h4>Today's Temperature Chart</h4></header>
