@@ -72,6 +72,7 @@ export default function Content({nightMode}) {
 
       let options = {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
           legend: {
             position: 'top',
@@ -84,11 +85,11 @@ export default function Content({nightMode}) {
       };
 
       let dayData = {
-        labels: weatherData.hourly.time.slice(0,24),
+        labels: weatherData.hourly.time.map(time=>time.toLocaleString()).slice(0,24),
         datasets: [
           {
             id: 1,
-            label: 'temperature',
+            label: 'Temperature in Celsius',
             data: weatherData.hourly.temperature_2m.slice(0,24),
             borderColor: nightMode ? 'rgb(255, 99, 132)' : 'rgb(53, 162, 235)',
             backgroundColor: nightMode ? 'rgba(255, 99, 132, 0.5)' : 'rgba(53, 162, 235, 0.5)',
@@ -107,7 +108,7 @@ export default function Content({nightMode}) {
         datasets: [
           {
             id: 1,
-            label: 'temperature',
+            label: 'Temperature in Celsius',
             data: weatherData.hourly.temperature_2m,
             borderColor: nightMode ? 'rgb(255, 99, 132)' : 'rgb(53, 162, 235)',
             backgroundColor: nightMode ? 'rgba(255, 99, 132, 0.5)' : 'rgba(53, 162, 235, 0.5)',
@@ -124,27 +125,27 @@ export default function Content({nightMode}) {
   },[weatherData,nightMode])
 
   return (
-    <div className={`container ${nightMode? 'Day':'Night'}`}>
+    <div className={`container ${nightMode? 'Night border-light':'Day border-dark'}`}>
       
       <section className='section'>
         <header><h4>Custom Search</h4></header>
-        <form onSubmit={handleSubmit(onSubmit, onError)}>
-          <input type='text' id='latitude' name='latitude' placeholder='Latitude' {...register('latitude')}/>
-          <input type='text' id='longitude' name='longitude' placeholder='Longitude' {...register('longitude')}/>
-          <button type='submit'>Submit</button>
+        <form onSubmit={handleSubmit(onSubmit, onError)} className={`card form ${nightMode ? 'Day':'Night'}`}>
+          <input type='text' id='latitude' name='latitude' className='input' placeholder='Latitude' {...register('latitude')}/>
+          <input type='text' id='longitude' name='longitude' className='input' placeholder='Longitude' {...register('longitude')}/>
+          <button type='submit' className={`btn btn-${nightMode ? 'Day' : 'Night'}`}>Submit</button>
         </form>
       </section>
 
       <section className='section'>
-        <header><h4>Today's Temperature Chart</h4></header>
-        <div>
+        <header><h4>Today's Temperature Forecast</h4></header>
+        <div className={`card ${nightMode ? 'Day':'Night'}`}>
           {dayChart}
         </div>
       </section>
       
       <section className='section'>
-        <header><h4>This Week's Temperature Chart</h4></header>
-        <div>
+        <header><h4>This Week's Temperature Forecast</h4></header>
+        <div className={`card ${nightMode ? 'Day':'Night'}`}>
           {weekChart}
         </div>
       </section>
