@@ -50,7 +50,12 @@ export default function Content({nightMode}) {
 
   useEffect(()=>{
     if(weatherData.hourly){
-      let dayLabels = weatherData.hourly.time.map(time=>time.toLocaleString()).slice(0,24);
+      let dayLabels = weatherData.hourly.time.map(time=>{
+        const dateObj = new Date(time);
+        const hour = (dateObj.getUTCHours()+12)%24;
+        const minute = dateObj.getUTCMinutes();
+        return `${hour}:${minute}`
+      }).slice(0,24);
       let dayData = weatherData.hourly.temperature_2m.slice(0,24);
 
       setDayChart(<GenerateChart 
@@ -62,7 +67,12 @@ export default function Content({nightMode}) {
         nightMode={nightMode}
       />)
       
-      let weekLabels = weatherData.hourly.time;
+      let weekLabels = weatherData.hourly.time.map(time=>{
+        const dateObj = new Date(time);
+        const hour = (dateObj.getUTCHours()+12)%24;
+        const minute = dateObj.getUTCMinutes();
+        return `${hour}:${minute}`
+      });
       let weekData = weatherData.hourly.temperature_2m;
 
       setWeekChart(<GenerateChart 
