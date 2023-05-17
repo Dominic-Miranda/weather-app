@@ -12,6 +12,16 @@
     color: var(--dark);
 }
 
+.Night-card{
+    background-color: rgb(26, 26, 26);
+    color: var(--light);
+}
+
+.Day-card{
+    background-color: white;
+    color: var(--dark);
+}
+
 .heading{
     display: flex;
     justify-content: space-between;

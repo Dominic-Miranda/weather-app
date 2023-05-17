@@ -1,7 +1,7 @@
 import './App.css';
 import { useState } from 'react';
 import {BiAdjust} from 'react-icons/bi';
-import Content from './components/content/content'
+import Dashboard from './components/dashboard/dashboard'
 
 function App() {
   let [nightMode,toggleNightMode] = useState(true)
@@ -16,10 +16,14 @@ function App() {
             <BiAdjust />
         </button>
       </header>
-      <hr className={`horizontalRule`}/>
+
       <section>
-        <Content nightMode={nightMode}/>
+        <Dashboard nightMode={nightMode}/>
       </section>
+
+      <footer>
+        <h2>Footer</h2>
+      </footer>
     </div>
   );
 }
