@@ -44,6 +44,18 @@ export default function GenerateChart(props) {
                         text: `${title??'Default Title'} (Latitude:${latitude}, Longitude: ${longitude})`,
                     },
                 },
+                scales: {
+                    y:{
+                        grid:{
+                            color: nightMode ? 'rgba(255,255,255,0.2)':'rgba(0,0,0,0.2)'
+                        }
+                    },
+                    x:{
+                        grid:{
+                            color: nightMode ? 'rgba(255,255,255,0.2)':'rgba(0,0,0,0.2)'
+                        }
+                    }
+                  }
             };
             
         let dayData = {

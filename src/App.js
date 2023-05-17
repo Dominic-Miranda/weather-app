@@ -21,8 +21,8 @@ function App() {
         <Dashboard nightMode={nightMode}/>
       </section>
 
-      <footer>
-        <h2>Footer</h2>
+      <footer className='footer'>
+        <h2>Footer Area</h2>
       </footer>
     </div>
   );
